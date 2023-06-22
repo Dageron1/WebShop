@@ -6,6 +6,8 @@
 <div class="row pb-3">
     @foreach (var product in Model)
     {
+        string id = $"a{product.Id}";
+
         <div class="col-lg-3 col-sm-6">
             <div class="row p-3">
                 <div class="col-12 p-1">
@@ -14,20 +16,17 @@
                         @if (product.ProductImages != null && product.ProductImages.Count() > 0)
                         {
                             @* <img src="@product.ProductImages.FirstOrDefault().ImageUrl" class="card-img-top rounded" style="max-width: 270px; max-height: 330px;" />*@
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div id="@id" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
 
                                     @foreach (var imageWithIndex in
                                    product.ProductImages
-                                   @*используем проекцию*@
                                    .Select((image, index) => new { Image = image, Index = index }))
                                     {
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@imageWithIndex.Index"
-                                        @*if index=0 то class active*@
+                                        <button type="button" data-bs-target="#@id" data-bs-slide-to="@imageWithIndex.Index"
+
                                                 class="@(imageWithIndex.Index == 0 ? "active" : "")" aria-current="true" aria-label="Slide 1"></button>
                                     }
-
-
                                 </div>
                                 <div class="carousel-inner">
                                     @foreach (var imageWithIndex in
@@ -39,11 +38,11 @@
                                         </div>
                                     }
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#@id" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#@id" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
