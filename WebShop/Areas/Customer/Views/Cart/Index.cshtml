@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model ShoppingCartVM
 
+
+
 <form method="post">
     <br />
     <div class="card shadow border-0">
@@ -34,9 +36,24 @@
                                     <img src="https://placehold.co/500x600/png" class="card-img-top rounded w-100" />
                                 }
                         </div>
-                        <div class="col-12 col-lg-6 pt-md-3">
+                        <div class="col-12 col-lg-6 pt-md-3 container">
                             <h5 class="text-uppercase text-secondary"><strong>@item.Product.Title</strong></h5>
-                                <p><small>@Html.Raw(item.Product.Description)</small></p>
+                                <small><h7 class="badge"><strong>by @item.Product.Author</strong></h7></small>
+                                
+                                <button class="btn btn-sm"
+                                        type="button"
+                                        data-mdb-toggle="collapse"
+                                        data-mdb-target="#collapseExample"
+                                        aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                    Opis
+                                </button>
+
+                                <!-- Collapsed content -->
+                                <div class="collapse mt-3" id="collapseExample">
+                                    <small>@Html.Raw(item.Product.Description)</small>
+                                </div>
+                                
                         </div>
                         <div class="col-12  col-lg-5 text-center row">
                             <div class="col-3 text-md-right pt-2 pt-md-4">

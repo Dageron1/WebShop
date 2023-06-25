@@ -20,12 +20,12 @@
                 <div class="py-3">
                     <div class="row">
 
-                        <div class="col-3 col-mt-1 offset-lg-1 pb-0 mb-3 btn-group">
+                        <div class="col-3 col-mt-1 offset-lg-9 pb-0 mb-3 btn-group">
                             <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-0 fw-semibold btn-sm text-uppercase">
                                 <small>Back to home</small>
                                 @if (User.IsInRole(SD.Role_Admin))
                                 {
-                                    <a href="/admin/product/upsert?id=@Model.Product.Id" class="btn btn-primary"> <i class="bi bi-pencil-square"></i> Edit</a>
+                                    <a href="/admin/product/upsert?id=@Model.Product.Id" class="btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i> Edit</a>
                                 }
                             </a>
                         </div>
