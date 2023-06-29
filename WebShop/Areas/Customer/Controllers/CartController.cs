@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using System.Security.Claims;
+using Microsoft.AspNetCore.SignalR;
+using WebShop.Hubs;
 
 namespace WebShopWeb.Areas.Customer.Controllers {
 
@@ -16,11 +18,13 @@ namespace WebShopWeb.Areas.Customer.Controllers {
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSender _emailSender;
+        private readonly IHubContext<OrderHub> _orderHub;
         [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
-        public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender) {
+        public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender, IHubContext<OrderHub> orderHub) {
             _unitOfWork = unitOfWork;
             _emailSender = emailSender;
+            _orderHub = orderHub;
         }
 
 
@@ -158,7 +162,7 @@ namespace WebShopWeb.Areas.Customer.Controllers {
 		}
 
 
-        public IActionResult OrderConfirmation(int id) {
+        public async Task<IActionResult> OrderConfirmation(int id) {
 
 			OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
             if(orderHeader.PaymentStatus!= SD.PaymentStatusDelayedPayment) {
@@ -184,8 +188,10 @@ namespace WebShopWeb.Areas.Customer.Controllers {
 
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
             _unitOfWork.Save();
+            var user = _unitOfWork.ApplicationUser.Get(u => u.Email == "admin@gmail.com");
+            await _orderHub.Clients.User(user.Id).SendAsync("newOrder");
 
-			return View(id);
+            return View(id);
 		}
 
 

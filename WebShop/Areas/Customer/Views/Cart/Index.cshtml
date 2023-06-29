@@ -27,6 +27,7 @@
                 <div class="col-md-10 offset-md-1">
 
                     @foreach(var item in Model.ShoppingCartList){
+                        string id = $"a{item.ProductId}";
                     <div class="row border-bottom pb-3">
                         <div class="d-none d-lg-block col-lg-1 text-center py-2">
                                 @if (item.Product.ProductImages != null && item.Product.ProductImages.Count() > 0) {
@@ -38,19 +39,19 @@
                         </div>
                         <div class="col-12 col-lg-6 pt-md-3 container">
                             <h5 class="text-uppercase text-secondary"><strong>@item.Product.Title</strong></h5>
-                                <small><h7 class="badge"><strong>by @item.Product.Author</strong></h7></small>
-                                
+                                <small><h7 class="badge badge-success" ><strong>by @item.Product.Author</strong></h7></small>
+
                                 <button class="btn btn-sm"
                                         type="button"
                                         data-mdb-toggle="collapse"
-                                        data-mdb-target="#collapseExample"
+                                        data-mdb-target="#@id"
                                         aria-expanded="false"
-                                        aria-controls="collapseExample">
+                                        >
                                     Opis
                                 </button>
 
                                 <!-- Collapsed content -->
-                                <div class="collapse mt-3" id="collapseExample">
+                                <div class="collapse mt-3" id="@id">
                                     <small>@Html.Raw(item.Product.Description)</small>
                                 </div>
                                 
@@ -71,12 +72,16 @@
                                         <i class="bi bi-dash-square"></i>
                                     </a>
                                 </div>
-                                <div class="btn btn-group-sm">
-                                        @if (User.IsInRole(SD.Role_Admin))
-                                        {
-                                            <a href="/admin/product/upsert?id=@item.Product.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
-                                        }
-                                </div>
+                                    @if (User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <div>
+
+
+                                            <a href="/admin/product/upsert?id=@item.Product.Id" class="btn btn-primary mt-2 mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
+
+                                        </div>
+                                    }
+                                    
                                     
                                     
                             </div>
@@ -112,3 +117,4 @@
             </div>
         </div>
 </form>
+

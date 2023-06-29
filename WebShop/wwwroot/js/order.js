@@ -1,4 +1,6 @@
 var dataTable;
+var connectionOrder = new signalR.HubConnectionBuilder().withUrl("/hubs/order").build();
+
 
 $(document).ready(function () {
     var url = window.location.search;
@@ -33,7 +35,7 @@ function loadDataTable(status) {
             { data: 'id', "width": "5%" },
             { data: 'name', "width": "25%" },
             { data: 'phoneNumber', "width": "20%" },
-            { data: 'applicationUser.email', "width": "20%" },
+            { data: 'applicationUser.email', "width": "20%" },           
             { data: 'orderStatus', "width": "10%" },
             { data: 'orderTotal', "width": "10%" },
             {
@@ -49,3 +51,16 @@ function loadDataTable(status) {
         ]
     });
 }
+
+connectionOrder.on("newOrder", () => {
+    dataTable.ajax.reload();
+    toastr.success("New order recived");
+})
+function fulfilled() {
+
+}
+function rejected() {
+
+}
+
+connectionOrder.start().then(fulfilled, rejected);

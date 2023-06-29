@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using WebShop.Models.ViewModels;
+using WebShop.DataAcess.Data;
 
 namespace WebShopWeb.Areas.Customer.Controllers
 {
@@ -15,12 +17,13 @@ namespace WebShopWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly ApplicationDbContext _context;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, ApplicationDbContext context)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
-
+            _context = context;
         }
 
         public IActionResult Index()
@@ -29,7 +32,23 @@ namespace WebShopWeb.Areas.Customer.Controllers
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
             return View(productList);
         }
-        
+        public IActionResult BasicChat()
+        {
+            return View();
+        }
+        [Authorize]
+        public IActionResult Chat()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChatVM chatVm = new()
+            {
+                Rooms = _context.ChatRoom.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId,
+            };
+            return View(chatVm);
+        }
+
         [HttpPost]
         public IActionResult SetTheme(string? data)
         {

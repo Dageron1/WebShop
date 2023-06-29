@@ -4,14 +4,15 @@
 @inject IJSRuntime js
 
 <div class="row pb-3">
+
     @foreach (var product in Model)
     {
         string id = $"a{product.Id}";
 
-        <div class="col-lg-3 col-sm-6">
-            <div class="row p-3">
-                <div class="col-12 p-1">
-                    <div class="card border-0 p-3 shadow border-top border-3 rounded" style="width: 300px; height: 530px;">
+        <div class="col-lg-3 col-sm-6 d-flex align-items-stretch ">
+            <div class="row p-3 ">
+                <div class="col-12 p-1 ">
+                    <div id="card" class="card border-0 p-3 shadow border-top border-3 rounded" style="width: 100%; height: 100%; align-items: stretch; display:flex">
 
                         @if (product.ProductImages != null && product.ProductImages.Count() > 0)
                         {
@@ -34,7 +35,7 @@
                                    .Select((image, index) => new { Image = image, Index = index }))
                                     {
                                         <div class="@(imageWithIndex.Index==0?"carousel-item active":"carousel-item")">
-                                            <img align="middle" style="width: 270px; height: 250px; margin: 10px auto 20px;" src="@imageWithIndex.Image.ImageUrl" class="d-block " alt="...">
+                                            <img align="middle" style="width: 100%; height: 100%; margin: 3% auto 0%;" src="@imageWithIndex.Image.ImageUrl" class="d-block " alt="...">
                                         </div>
                                     }
                                 </div>
@@ -98,3 +99,8 @@
         </div>
     }
 </div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/signalr.js"></script> @*подключаем клиент сайд библиотеку внутри представления*@
+<script src="~/js/usersCount.js"></script>
