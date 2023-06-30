@@ -15,14 +15,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kosmetix</title>
     
-    <!-- Google Fonts -->
-   @* <link rel="stylesheet" href="~/css/colorMod.css">*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           rel="stylesheet" />
     
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/WebShopWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/toastr.css" />
     <link rel="stylesheet" href="~/css/CustomChat.css" asp-append-version="true" />
@@ -32,10 +29,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
           rel="stylesheet" />
     <!-- MDB -->
-    <link href="~/lib/bootstrap/dist/css/mdb.min.css"
-          rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/mdb.dark.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/mdb.min.css" /> 
+
 </head>
-<body>@* id="mybody" class="dark-mode"*@
+<body>
+    @* id="mybody" class="dark-mode"*@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3" style="height:50px">
             <div class="container-fluid">
@@ -117,12 +116,12 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <button type="button" class="btn-1 dropdown-item d-flex align-items-center" @*id="light-mode"*@ data-bs-theme-value="light" aria-pressed="false">
+                                        <button type="button" class="btn-1 dropdown-item d-flex align-items-center"  aria-pressed="false">
                                             <i class="bi bi-sun-fill"></i><span class="ms-2">Light</span>
                                         </button>
                                     </li>
                                     <li>
-                                        <button type="button" class="btn-2 dropdown-item d-flex align-items-center" @*id="dark-mode"*@ data-bs-theme-value="dark" aria-pressed="true">
+                                        <button type="button" class="btn-2 dropdown-item d-flex align-items-center" id="skinToggler"  aria-pressed="true">
                                             <i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span>
                                         </button>
                                     </li>
@@ -271,10 +270,10 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!-- Footer -->
     <script src="~/js/signalr.js"></script> @*подключаем клиент сайд библиотеку внутри представления*@
     <script src="~/js/usersCount.js"></script>
     <script src="~/js/site.js"></script>
+    <script src="~/js/mdb.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     

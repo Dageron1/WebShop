@@ -1,7 +1,9 @@
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-
+html {
+    visibility: hidden;
+}
 .divider-text:before,
 .divider-text:after {
     color: white;
@@ -675,7 +677,7 @@ bg-success {
     color-scheme: dark;
     --bs-body-color: #adb5bd;
     --bs-body-color-rgb: 173, 181, 189;
-    --bs-body-bg: #1a1a1a;
+    --bs-body-bg: black;
     --bs-body-bg-rgb: 26, 26, 26;
     --bs-emphasis-color: #fff;
     --bs-emphasis-color-rgb: 255, 255, 255;
@@ -736,4 +738,3 @@ bg-success {
         scroll-behavior: smooth;
     }
 }
-

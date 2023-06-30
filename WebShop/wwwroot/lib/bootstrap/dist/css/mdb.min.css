@@ -17,6 +17,9 @@
  * 
  */
 
+html {
+    visibility: hidden;
+}
 .footer {
     position: absolute;
     left: 0;
@@ -94,6 +97,7 @@
     --mdb-code-color: #e91e63;
     --mdb-highlight-bg: #fff9c4
 }
+
 
 *, :after, :before {
     box-sizing: border-box
