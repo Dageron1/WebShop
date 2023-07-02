@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-5">
         <div class="row pt-3">
             <div class="col-md-12">
                 <form id="registerForm" class="row" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -89,7 +89,7 @@
             {
                 <div class="col-md-12 p-3 text-center">
                     <section>
-                        <p class="divider-text d-flex pt-3">or</p>
+                        <p class="pb-3" align="center"><b>or</b></p>
 
                         @{
                             if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -110,7 +110,23 @@
                                         <p>
                                             @foreach (var provider in Model.ExternalLogins!)
                                             {
-                                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                                if(provider.DisplayName == "Microsoft")
+                                                {
+                                                    <button type="submit" class="btn btn-success" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                        <i class="bi bi-microsoft"></i> @provider.DisplayName 
+                                                    </button>
+                                                }
+                                                if (provider.DisplayName == "Facebook")
+                                                {
+                                                    <button type="submit" class="btn btn-info" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                        <i class="bi bi-facebook"></i> @provider.DisplayName
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                   
+
+                                                }
                                             }
                                         </p>
                                     </div>

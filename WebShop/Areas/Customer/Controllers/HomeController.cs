@@ -9,6 +9,7 @@ using System.Security.Claims;
 using WebShop.Models.ViewModels;
 using WebShop.DataAcess.Data;
 
+
 namespace WebShopWeb.Areas.Customer.Controllers
 {
     [Area("Customer")]
@@ -28,13 +29,34 @@ namespace WebShopWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
             return View(productList);
+        }
+        public IActionResult AdvancedChat()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChatVM chatVm = new()
+            {
+                Rooms = _context.ChatRoom.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId,
+            };
+            return View(chatVm);
         }
         public IActionResult BasicChat()
         {
             return View();
+        }
+        public PartialViewResult ChatParial()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ChatVM chatVm = new()
+            {
+                Rooms = _context.ChatRoom.ToList(),
+                MaxRoomAllowed = 4,
+                UserId = userId,
+            };
+            return PartialView("ChatPartial", chatVm);
         }
         [Authorize]
         public IActionResult Chat()

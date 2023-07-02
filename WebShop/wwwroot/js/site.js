@@ -5,78 +5,55 @@
  */
 
 
-    'use strict'
+'use strict'
 window.addEventListener('load', function () {
     document.getElementsByTagName("html")[0].style.visibility = "visible";
 });
 
-    const getStoredTheme = () => localStorage.getItem('theme')
-    const setStoredTheme = theme => localStorage.setItem('theme', theme)
 
-    const getPreferredTheme = () => {
-        const storedTheme = getStoredTheme()
-        if (storedTheme) {
-            return storedTheme
-        }
+const switchLightTheme = () => {
+    const rootElem = document.documentElement
+    let dataTheme = rootElem.getAttribute('data-theme'),
+        newTheme
 
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
+        newTheme = 'light'
 
-    const setTheme = theme => {
-        if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-        } else {
-            document.documentElement.setAttribute('data-bs-theme', theme)
-        }
-    }
+    rootElem.setAttribute('data-theme', newTheme)
+    localStorage.setItem('theme', newTheme)
+}
 
-    setTheme(getPreferredTheme())
+const switchDarkTheme = () => {
+    const rootElem = document.documentElement
+    let dataTheme = rootElem.getAttribute('data-theme'),
+        newTheme
 
-    const showActiveTheme = (theme, focus = false) => {
-        const themeSwitcher = document.querySelector('#bd-theme')
+    newTheme = 'dark'
 
-        if (!themeSwitcher) {
-            return
-        }
+    rootElem.setAttribute('data-theme', newTheme)
 
-        const themeSwitcherText = document.querySelector('#bd-theme-text')
-        const activeThemeIcon = document.querySelector('.theme-icon-active use')
-        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-        const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+    localStorage.setItem('theme', newTheme)
+}
 
-        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-            element.classList.remove('active')
-            element.setAttribute('aria-pressed', 'false')
-        })
+function showModalWin() {
 
-        btnToActive.classList.add('active')
-        btnToActive.setAttribute('aria-pressed', 'true')
-        activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-        const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-        themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+    var darkLayer = document.createElement('div'); // слой затемнения
+    darkLayer.id = 'shadow'; // id чтобы подхватить стиль
+    document.body.appendChild(darkLayer); // включаем затемнение
 
-        if (focus) {
-            themeSwitcher.focus()
-        }
-    }
+    var modalWin = document.getElementById('popupWin'); // находим наше "окно"
+    modalWin.style.display = 'block'; // "включаем" его
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-        const storedTheme = getStoredTheme()
-        if (storedTheme !== 'light' && storedTheme !== 'dark') {
-            setTheme(getPreferredTheme())
-        }
-    })
+    darkLayer.onclick = function () {  // при клике на слой затемнения все исчезнет
+        darkLayer.parentNode.removeChild(darkLayer); // удаляем затемнение
+        modalWin.style.display = 'none'; // делаем окно невидимым
+        return false;
+    };
+}
 
-    window.addEventListener('DOMContentLoaded', () => {
-        showActiveTheme(getPreferredTheme())
+document.querySelector('#lightSwitcher').addEventListener('click', switchLightTheme)
+document.querySelector('#darkSwitcher').addEventListener('click', switchDarkTheme)
 
-        document.querySelectorAll('[data-bs-theme-value]')
-            .forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    const theme = toggle.getAttribute('data-bs-theme-value')
-                    setStoredTheme(theme)
-                    setTheme(theme)
-                    showActiveTheme(theme, true)
-                })
-            })
-    })
+var chat = document.getElementById('chat')
+chat.scrollTop = chat.scrollHeight - chat.clientHeight
+
+

@@ -29,6 +29,8 @@ html {
 }
 
 :root {
+    --mdb-text-color: #b1b1b1;
+    --mdb-bg: #121111;
     --mdb-red: #f44336;
     --mdb-pink: #e91e63;
     --mdb-purple: purple-500;
@@ -72,7 +74,7 @@ html {
     --mdb-white-rgb: 255,255,255;
     --mdb-black-rgb: 0,0,0;
     --mdb-body-color-rgb: 79,79,79;
-    --mdb-body-bg-rgb: 255,255,255;
+    /*    --mdb-body-bg-rgb: 255,255,255;*/
     --mdb-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     --mdb-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
     --mdb-gradient: linear-gradient(180deg,hsla(0,0%,100%,0.15),hsla(0,0%,100%,0));
@@ -4202,7 +4204,7 @@ textarea.form-control-lg {
     --mdb-card-cap-padding-y: 0.75rem;
     --mdb-card-cap-padding-x: 1.5rem;
     --mdb-card-cap-bg: hsla(0,0%,100%,0);
-    --mdb-card-bg: #fff;
+
     --mdb-card-img-overlay-padding: 1.5rem;
     --mdb-card-group-margin: 0.75rem;
     position: relative;
@@ -6011,7 +6013,7 @@ textarea.form-control-lg {
     justify-content: center;
     width: 15%;
     padding: 0;
-    color: #fff;
+    color: #d2b7ce;
     text-align: center;
     background: none;
     border: 0;
@@ -7524,7 +7526,7 @@ textarea.form-control-lg {
 }
 
 .border {
-    border: var(--mdb-border-width) var(--mdb-border-style) var(--mdb-border-color) !important
+    /*border: var(--mdb-border-width) var(--mdb-border-style) var(--mdb-border-color) !important*/
 }
 
 .border-0 {
@@ -8297,7 +8299,7 @@ textarea.form-control-lg {
 }
 
 .p-4 {
-    padding: 1.5rem !important
+    padding: 0.15rem !important
 }
 
 .p-5 {
@@ -8668,7 +8670,7 @@ textarea.form-control-lg {
 
 .text-muted {
     --mdb-text-opacity: 1;
-    color: #757575 !important
+    color: var(--mdb-text-color) !important
 }
 
 .text-black-50 {
@@ -8704,7 +8706,7 @@ textarea.form-control-lg {
 
 .bg-primary {
     --mdb-bg-opacity: 1;
-    background-color: black !important
+    background-color: var(--mdb-bg) !important
 }
 
 .bg-secondary {
@@ -17210,8 +17212,8 @@ hr.divider-vertical-blurry {
 }
 
 .alert-primary {
-    background-color: #dfe7f6;
-    color: #2c58a0
+    background-color: #a3a8d7;
+    color: white;
 }
 
     .alert-primary i {
@@ -17295,8 +17297,8 @@ hr.divider-vertical-blurry {
         }
 
 .alert-info {
-    background-color: #def1f7;
-    color: #1c657d
+    background-color: #b7c2c5;
+    color: white;
 }
 
     .alert-info i {

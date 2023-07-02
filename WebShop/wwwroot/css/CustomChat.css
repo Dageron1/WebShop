@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css?family=Red+Hat+Display:400,500,900&display=swap");
 
+.radius {
+        border: 12px solid CornflowerBlue;
+        border-radius: 5px;
+    }
+
+    /* или (две записи равнозначны) */
+
+    .radius {
+        border: 3px solid CornflowerBlue;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
 body, html {
     font-family: Red hat Display, sans-serif;
     font-weight: 400;
