@@ -87,7 +87,7 @@ namespace WebShopWeb.Areas.Customer.Controllers {
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
                 includeProperties: "Product");
 
-			ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
+			ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now.ToString("dd MMMM yyyy HH:mm");
 			ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
 			ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
@@ -115,7 +115,7 @@ namespace WebShopWeb.Areas.Customer.Controllers {
                     ProductId = cart.ProductId,
                     OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
                     Price = cart.Price,
-                    Count = cart.Count
+                    Count = cart.Count, 
                 };
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();

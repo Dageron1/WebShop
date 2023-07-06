@@ -17,7 +17,7 @@ namespace WebShop.Models {
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public string? OrderDate { get; set; }
         public DateTime ShippingDate { get; set; }
         public double OrderTotal { get; set; }
 

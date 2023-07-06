@@ -17,35 +17,35 @@ connection
   });
 
 connection.on("ReceiveOnlineUsers", function (response) {
-  for (i = 0; i < response.length; i++) {
-    var spanOnline = document.getElementById(`spanOnline${response[i]}`);
-    if (typeof spanOnline != "undefined" && spanOnline != null) {
-      // Exists.
-      spanOnline.classList.add("bg-success");
-      spanOnline.classList.remove("bg-danger");
-      spanOnline.setAttribute("title", "Online");
+    for (i = 0; i < response.length; i++) {
+        var spanOnline = document.getElementById(`spanOnline${response[i]}`);
+        if (typeof spanOnline != "undefined" && spanOnline != null) {
+            // Exists.
+            spanOnline.classList.add("bg-success");
+            spanOnline.classList.remove("bg-danger");
+            spanOnline.setAttribute("title", "Online");
+        }
     }
-  }
 });
 
 connection.on("ReceiveUserConnected", function (userId, userName) {
-  var spanOnline = document.getElementById(`spanOnline${userId}`);
-  if (typeof spanOnline != "undefined" && spanOnline != null) {
-    // Exists.
-    spanOnline.classList.add("bg-success");
-    spanOnline.classList.remove("bg-danger");
-    spanOnline.setAttribute("title", "Online");
-  }
+    var spanOnline = document.getElementById(`spanOnline${userId}`);
+    if (typeof spanOnline != "undefined" && spanOnline != null) {
+        // Exists.
+        spanOnline.classList.add("bg-success");
+        spanOnline.classList.remove("bg-danger");
+        spanOnline.setAttribute("title", "Online");
+    }
 });
 
 connection.on("ReceiveUserDisconnected", function (userId, userName) {
-  var spanOnline = document.getElementById(`spanOnline${userId}`);
-  if (typeof spanOnline != "undefined" && spanOnline != null) {
-    // Exists.
-    spanOnline.classList.remove("bg-success");
-    spanOnline.classList.add("bg-danger");
-    spanOnline.setAttribute("title", "Offline");
-  }
+    var spanOnline = document.getElementById(`spanOnline${userId}`);
+    if (typeof spanOnline != "undefined" && spanOnline != null) {
+        // Exists.
+        spanOnline.classList.remove("bg-success");
+        spanOnline.classList.add("bg-danger");
+        spanOnline.setAttribute("title", "Offline");
+    }
 });
 
 connection.on(
@@ -58,7 +58,7 @@ connection.on(
 connection.on(
   "ReceiveAddRoomMessage",
   function (maxRoom, roomId, roomName, userId, userName) {
-    receiveaddnewRoomMessage(maxRoom, roomId, roomName, userId);
+    receiveaddnewRoomMessage(maxRoom, roomId, roomName, userId, userName);
   }
 );
 
@@ -71,8 +71,8 @@ connection.on(
 
 connection.on(
   "ReceivePrivateMessage",
-  function (senderId, senderName, receiveId, message, chatId) {
-    receiveprivateMessage(senderId, senderName, receiveId, message, chatId);
+    function (senderId, senderName, receiveId, message, chatId, receiverName, time) {
+        receiveprivateMessage(senderId, senderName, receiveId, message, chatId, receiverName, time);
   }
 );
 
@@ -84,6 +84,21 @@ connection.on("ReceiveDeletePrivateChat", function (chatId) {
   receivedeleteprivateChat(chatId);
 });
 
+document.getElementById("inputMessagePrivate").addEventListener("keyup", function (e) {
+    if (e.keyCode == 13 && !e.shiftKey) {
+        e.preventDefault();
+        sendprivateMessage();
+        return false;
+    }
+    //if (e.keyCode == 13 && e.shiftKey) {
+    //    e.preventDefault();
+    //    const txtArea = document.getElementById("inputMessagePrivate");
+    //    txtArea.value += '\r\n';
+    //}
+});
+//var area = document.getElementById("inputMessagePrivate").addEventListener('input', function (e) {
+//    area.innerHTML = e.target.value.replace('\n', '123');
+//});
 function sendpublicMessage(roomId) {
   let sendButton = document.getElementById(`btnMessage${roomId}`);
   let inputMsg = document.getElementById(`inputMessage${roomId}`);
@@ -187,12 +202,12 @@ function deleteRoom(roomId, roomName) {
   //        console.log("Request Failed: " + err);
   //    });
 }
-
 function sendprivateMessage() {
   var receiverId = document.getElementById("hdchatUserId").value;
-  let inputMsg = document.getElementById("inputMessagePrivate");
+    let inputMsg = document.getElementById("inputMessagePrivate");
+  
+    var message = inputMsg.value;
 
-  var message = inputMsg.value;
 
   connection
     .invoke("SendPrivateMessage", receiverId, message, "")

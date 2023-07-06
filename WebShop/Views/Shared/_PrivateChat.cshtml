@@ -22,7 +22,34 @@
     .border2 {
         border-radius: 1px 15px 15px 15px;
     }
+    .inline {
+        display: inline-block;
+        inline-size: auto;
+        max-inline-size: 300px;
+        
+    }
+
+    .inline2 {
+        display: inline-block;
+        inline-size: auto;
+        max-inline-size: 300px;
+    }
+
+    .wrap {
+        white-space: pre-wrap;
+    }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    
 </style>
+
 <div style="height:450px;">
     <div class="h-100 row" style="overflow: hidden;">
         <div class="col-md-4 col-6">
@@ -66,7 +93,8 @@
                     <div class="d-flex flex-fill pt-3 px-4">
                         <div class="d-block border border-black rounded w-100 h-100" style="overflow-y:auto; max-height:340px">
                             <div class="tab-content" id="nav-tabContent">
-
+                                <audio id="audio" src="~/audio/5216_pod-zvonok.ru__.mp3"></audio>
+                                <audio id="deleteSound" src="~/audio/deleteSound.mp3"></audio>
                                 @*@foreach(var item in Model.Input.Users)
                                 {
                                 <div class="tab-pane fade @(Model.Input.Users.First().Id == item.Id ? "show active" : "")" id="list-@(item.Id)" role="tabpanel" aria-labelledby="list-@(item.Id)-list">
@@ -98,12 +126,12 @@
                                 </label>
                             </div>
                             <div class="col">
-                                <textarea style="resize:none; margin-bottom: 15px; margin-left:30px; width: 90%;" placeholder="Type your message..." style="resize:none;" type="text" id="inputMessagePrivate" onkeyup="readyprivateMessage()" class="form-control"></textarea>
+                                <textarea style="resize:none; margin-bottom: 15px; margin-left:30px; width: 90%;" placeholder="Type your message..." type="text" id="inputMessagePrivate" onkeyup="readyprivateMessage()" class="form-control"></textarea>
                             </div>
                             <div class="col-auto">
                                 <button style="margin-bottom: 15px; margin-right:30px;" type="button" disabled
                                         id="btnMessagePrivate"
-                                        onclick="sendprivateMessage()"
+                                        onclick="sendprivateMessage();"
                                         class="btn btn-primary">
                                     Send
                                 </button>

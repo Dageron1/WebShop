@@ -35,11 +35,13 @@ namespace WebShopWeb.Areas.Customer.Controllers
         public IActionResult AdvancedChat()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var users = _unitOfWork.ApplicationUser.GetAll();
             ChatVM chatVm = new()
             {
                 Rooms = _context.ChatRoom.ToList(),
                 MaxRoomAllowed = 4,
                 UserId = userId,
+                //Users = users
             };
             return View(chatVm);
         }

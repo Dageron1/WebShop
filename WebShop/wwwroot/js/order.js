@@ -32,12 +32,13 @@ function loadDataTable(status) {
     dataTable = $('#tblData').DataTable({
         "ajax": { url: '/admin/order/getall?status=' + status },
         "columns": [
-            { data: 'id', "width": "5%" },
-            { data: 'name', "width": "25%" },
+            { data: 'id', "width": "3%" },
+            { data: 'name', "width": "20%" },
             { data: 'phoneNumber', "width": "20%" },
             { data: 'applicationUser.email', "width": "20%" },           
+            { data: 'orderDate', "width": "20%" },           
             { data: 'orderStatus', "width": "10%" },
-            { data: 'orderTotal', "width": "10%" },
+            { data: 'orderTotal', "width": "7%" },
             {
                 data: 'id',
                 "render": function (data) {
@@ -51,6 +52,8 @@ function loadDataTable(status) {
         ]
     });
 }
+
+
 
 connectionOrder.on("newOrder", () => {
     dataTable.ajax.reload();

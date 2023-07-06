@@ -146,9 +146,9 @@ function receivepublicMessage(roomId, userId, username, message) {
     userId == document.getElementById("hdUserId").value ||
     document.getElementById("hdUserId").value == ""
   ) {
-    newmsg.innerHTML = `${username} says ${message}`;
+    newmsg.innerHTML = `${username}: ${message}`;
   } else {
-    newmsg.innerHTML = `<i role="button" class="bi bi-arrow-right-circle text-primary" onclick="openprivateChat('${userId}','${username}')"> </i> ${username} says ${message}`;
+    newmsg.innerHTML = `<i role="button" class="bi bi-arrow-right-circle text-primary" onclick="openprivateChat('${userId}','${username}')"> </i> ${username}: ${message}`;
   }
 
   li.appendChild(newmsg);
@@ -162,9 +162,11 @@ function readypublicMessage(roomId) {
   let inputMsg = document.getElementById(`inputMessage${roomId}`);
   let sendButton = document.getElementById(`btnMessage${roomId}`);
 
-  if (inputMsg.value.length == 0) {
+  if (/^\s/.test(inputMsg.value)) {
+        inputMsg.value = '';
     sendButton.disabled = true;
-  } else {
+  }
+  else {
     sendButton.disabled = false;
   }
 }
@@ -174,9 +176,12 @@ function receiveprivateMessage(
   senderName,
   receiveId,
   message,
-  chatId
+    chatId,
+  receiverName,
+  time
 ) {
-  var chatboxName = `ulmessagesList${receiveId}`;
+    var chatboxName = `ulmessagesList${receiveId}`;
+    var biChek = `<i class="bi bi-check"></i>`;
 
   if (receiveId === document.getElementById("hdUserId").value) {
     chatboxName = `ulmessagesList${senderId}`;
@@ -188,45 +193,64 @@ function receiveprivateMessage(
     receiveopenprivateChat(senderId, senderName);
     ulmessagesList = document.getElementById(chatboxName);
   }
-
-  let li = document.createElement("li");
-  let newmsg = document.createElement("p");
-
-  newmsg.setAttribute("id", chatId);
+    let myAudio = document.querySelector('#audio');
+    
+    let li = document.createElement("li");
+    let newmsg = document.createElement("p");
+   
+    newmsg.setAttribute("id", chatId);
+/*    var checkMark = document.getElementById("checkMark");*/
 
   newmsg.classList.add("alert");
-  newmsg.classList.add("px-2");
+    newmsg.classList.add("px-2");
+    ulmessagesList.classList.add("p-2");
+    
 
-
-  if (senderId === document.getElementById("hdUserId").value) {
+    if (senderId === document.getElementById("hdUserId").value) {
+        li.classList.add("text-end");
     newmsg.classList.add("me-3");
-    newmsg.classList.add("text-end");
+    newmsg.classList.add("p-2");
+    newmsg.classList.add("inline");
+        newmsg.classList.add("text-break");
+        newmsg.classList.add("text-start");
+    newmsg.classList.add("inline");
     newmsg.classList.add("alert-primary");
     newmsg.classList.add("border1");
-    newmsg.innerHTML = `${message} <i role="button" class="bi bi-x-circle text-danger" onclick="deleteprivateChat('${chatId}')"> </i>`;
-  } else {
-    newmsg.classList.add("ms-1");
-    newmsg.classList.add("alert-info");
-    newmsg.classList.add("border2");
-    newmsg.innerHTML = `<i role="button" class="bi bi-x-circle text-danger" onclick="deleteprivateChat('${chatId}')"> </i> ${message}`;
+    newmsg.classList.add("wrap");    
+        newmsg.innerHTML = `${message}<button role="button" align="left" style="background:none; border:none; " class="bi bi-trash-fill text-danger" onclick="deleteprivateChat('${chatId}')"></button><div id="checkMark" class="text-end">${biChek}${time}</div>`;
+
+    } else {
+        li.classList.add("text-start");
+        newmsg.classList.add("ms-1");
+        newmsg.classList.add("p-2");
+        newmsg.classList.add("alert-info");
+        newmsg.classList.add("inline2");
+        newmsg.classList.add("text-break");
+        newmsg.classList.add("wrap");
+        newmsg.classList.add("border2");
+        myAudio.play();
+        newmsg.innerHTML = `${message}<div class="text-start"> ${time}<i role="button" class="bi bi-trash text-danger" onclick="deleteprivateChat('${chatId}')"></i></div>`;
   }
 
-  li.appendChild(newmsg);
+    li.appendChild(newmsg);
+
+    
   ulmessagesList.appendChild(li);
 
   li.scrollIntoView(false);
   li.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 
-  notifyUnreadMessage(1);
+    notifyUnreadMessage(1);
 }
 
 function readyprivateMessage() {
   let inputMsg = document.getElementById("inputMessagePrivate");
-  let sendButton = document.getElementById("btnMessagePrivate");
-
-  if (inputMsg.value.length == 0) {
-    sendButton.disabled = true;
-  } else {
+    
+    let sendButton = document.getElementById("btnMessagePrivate");
+    if (/^\s/.test(inputMsg.value)) {
+        inputMsg.value = '';
+        sendButton.disabled = true;
+    } else {
     sendButton.disabled = false;
   }
 }
@@ -345,8 +369,9 @@ function receiveopenprivateChat(userId, userName, tabchange) {
                             <i role="button" class="bi bi-x-lg" title="Close chat" onclick="deleteprivatechatGroup('${userId}')"> </i> ${userName}
                         </div>
                         <div class="col-auto">
-                            <i class="block-text align-middle bg-success rounded-circle"
+                            <i class="dot block-text align-middle bg-success"
                                 id="spanOnline${userId}" style="margin-left:5px;" title="Online">
+                                <span id="user-badge${userId}" class="badge bg-danger"></span>
                                 </i>
                         </div>
                     </div>`;
@@ -382,8 +407,8 @@ function receiveopenprivateChat(userId, userName, tabchange) {
     div2.setAttribute("role", `tabpanel`);
 
     div2.innerHTML = `<div style="overflow: hidden;"> 
-                        <div class="d-block px-2 pb-2" /* style="overflow-y:auto*/; max-height:700px">  
-                            <ul class="p-2" style="list-style-type:none; overflow-wrap: break-word" id="ulmessagesList${userId}">
+                        <div class="d-block px-2 pb-2" /* style="overflow-y:auto*/; max-height:1700px">  
+                            <ul class="p-2" style="list-style-type:none; /*overflow-wrap: break-word*/" id="ulmessagesList${userId}">
                             </ul>
                         </div>
                     </div>`;
@@ -393,11 +418,13 @@ function receiveopenprivateChat(userId, userName, tabchange) {
 }
 
 function receivedeleteprivateChat(chatid) {
-  let p = document.getElementById(chatid);
+    let p = document.getElementById(chatid);
+    let myAudioDelete = document.querySelector('#deleteSound');
   let li = p.parentNode;
   let ui = li.parentNode;
 
-  ui.removeChild(li);
+    ui.removeChild(li);
+    myAudioDelete.play();
 
   notifyUnreadMessage(2);
 }
@@ -463,9 +490,9 @@ function notifyUnreadMessage(action) {
   if (pubtab.classList.contains("active")) {
     var badgeval = Number(badge.innerText);
     if (action == 1) {
-      badgeval = badgeval + 1;
+        badgeval = badgeval + 1;
     } else {
-      badgeval = badgeval - 1;
+        badgeval = badgeval - 1;  
     }
 
     if (badgeval == 0) {
@@ -475,5 +502,7 @@ function notifyUnreadMessage(action) {
     } else {
       badge.innerText = "99+";
     }
-  }
+    }
 }
+
+

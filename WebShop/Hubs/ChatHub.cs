@@ -62,25 +62,26 @@ namespace WebShop.Hubs
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = _db.Users.FirstOrDefault(u => u.Id == UserId).UserName;
 
-            await Clients.All.SendAsync("ReceiveDeleteRoomMessage", deleted,selected, roomName,userName);
+            await Clients.All.SendAsync("ReceiveDeleteRoomMessage", deleted, selected, roomName, userName);
         }
 
-        public async Task SendPublicMessage(int roomId,string message, string roomName)
+        public async Task SendPublicMessage(int roomId, string message, string roomName)
         {
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = _db.Users.FirstOrDefault(u => u.Id == UserId).UserName;
 
-            await Clients.All.SendAsync("ReceivePublicMessage", roomId, UserId,userName, message, roomName);
+            await Clients.All.SendAsync("ReceivePublicMessage", roomId, UserId, userName, message, roomName);
         }
 
         public async Task SendPrivateMessage(string receiverId, string message, string receiverName)
         {
             var senderId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var senderName = _db.Users.FirstOrDefault(u => u.Id == senderId).UserName;
-
+            var time = DateTime.Now.ToShortTimeString();
+            char[] MyChar = { ' ', '\n' };
             var users = new string[] { senderId, receiverId };
-
-            await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, senderName, receiverId, message, Guid.NewGuid(),receiverName);
+           
+            await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, senderName, receiverId, message.TrimEnd(MyChar), Guid.NewGuid(),receiverName, time);
         }
 
         public async Task SendOpenPrivateChat(string receiverId)

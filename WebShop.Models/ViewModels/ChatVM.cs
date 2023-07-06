@@ -1,4 +1,6 @@
-﻿namespace WebShop.Models.ViewModels
+﻿using System.Security.Claims;
+
+namespace WebShop.Models.ViewModels
 {
     public class ChatVM
     {
@@ -10,6 +12,7 @@
         public IList<ChatRoom> Rooms { get; set; }
 
         public string? UserId { get; set; }
+        //public IEnumerable<ApplicationUser> Users { get; set; }
 
         public bool AllowAddRoom => Rooms == null || Rooms.Count < MaxRoomAllowed;
     }
