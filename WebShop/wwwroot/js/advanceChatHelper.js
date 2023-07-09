@@ -4,78 +4,78 @@
 // Write your JavaScript code.
 
 function receiveaddnewRoomMessage(maxRoom, roomId, roomName, userId) {
-  var newli = document.createElement("li");
+    var newli = document.createElement("li");
 
-  /*let ui = li.parentNode;*/
-  let ui = document.getElementById("ulroomTabs");
-  let li = document.getElementById("liaddnewRoom");
+    /*let ui = li.parentNode;*/
+    let ui = document.getElementById("ulroomTabs");
+    let li = document.getElementById("liaddnewRoom");
 
-  var roomHeight = 450;
-  var deleteicon = "";
-  var changeTab = false;
+    var roomHeight = 450;
+    var deleteicon = "";
+    var changeTab = false;
 
-  if (typeof li != "undefined" && li != null) {
-    roomHeight = 280;
-    deleteicon = `<i class="bi bi-trash text-danger deleteRoom" onclick="deleteRoom(${roomId},'${roomName}')"></i>`;
+    if (typeof li != "undefined" && li != null) {
+        roomHeight = 280;
+        deleteicon = `<i class="bi bi-trash text-danger deleteRoom" onclick="deleteRoom(${roomId},'${roomName}')"></i>`;
 
-    if (li.firstElementChild.classList.contains("active")) {
-      changeTab = true;
+        if (li.firstElementChild.classList.contains("active")) {
+            changeTab = true;
+        }
+    } else {
+        if (ui.children.length == 0) {
+            changeTab = true;
+        }
     }
-  } else {
-    if (ui.children.length == 0) {
-      changeTab = true;
+
+    if (userId == document.getElementById("hdUserId").value) {
+        changeTab = true;
     }
-  }
 
-  if (userId == document.getElementById("hdUserId").value) {
-    changeTab = true;
-  }
-
-  newli.innerHTML = `<a class="nav-link text-center" id="room${roomId}-tab" data-bs-toggle="tab"
+    newli.innerHTML = `<a class="nav-link text-center" id="room${roomId}-tab" data-bs-toggle="tab"
                             href="#room${roomId}" role="tab" aria-controls="room${roomId}"
                             aria-selected="true">
                                 ${roomName} ${deleteicon}
                                 </a>`;
 
-  newli.classList.add("nav-item");
-  newli.classList.add("w-20");
+    newli.classList.add("nav-item");
+    newli.classList.add("w-20");
 
-  newli.setAttribute("role", "presentation");
+    newli.setAttribute("role", "presentation");
 
-  if (changeTab) {
-    newli.firstElementChild.classList.add("active");
-  }
-
-  ui.appendChild(newli);
-
-  if (typeof li != "undefined" && li != null) {
-    ui.removeChild(li);
-    ui.appendChild(li);
-  }
-
-  let newdiv = document.createElement("div");
-  var divrooms = document.getElementById("divRooms");
-
-  newdiv.classList.add("tab-pane");
-  newdiv.classList.add("fade");
-
-  newdiv.classList.add("h-100");
-
-  newdiv.setAttribute("id", `room${roomId}`);
-
-  newdiv.setAttribute("role", "tabpanel");
-
-  newdiv.setAttribute("aria-labelledby", `room${roomId}-tab`);
-
-  if (ui.childElementCount > maxRoom) {
-    if (typeof li != "undefined" && li != null) {
-      li.classList.add("d-none");
+    if (changeTab) {
+        newli.firstElementChild.classList.add("active");
     }
-  }
 
-  var serchaInput = "";
-  if (typeof li != "undefined" && li != null) {
-      serchaInput = `<div class="flex-column">
+    ui.appendChild(newli);
+
+    if (typeof li != "undefined" && li != null) {
+        ui.removeChild(li);
+        ui.appendChild(li);
+    }
+
+    let newdiv = document.createElement("div");
+    var divrooms = document.getElementById("divRooms");
+
+    newdiv.classList.add("tab-pane");
+    newdiv.classList.add("fade");
+
+    newdiv.classList.add("h-100");
+
+    newdiv.setAttribute("id", `room${roomId}`);
+
+    newdiv.setAttribute("role", "tabpanel");
+
+    newdiv.setAttribute("aria-labelledby", `room${roomId}-tab`);
+
+    if (ui.childElementCount > maxRoom) {
+        if (typeof li != "undefined" && li != null) {
+            li.classList.add("d-none");
+        }
+    }
+
+    var serchaInput = "";
+    if (typeof li != "undefined" && li != null) {
+        serchaInput = `<div class="flex-column">
                                             <div class="row g-3 align-items-center" style="position: static;">
                                                 <div class="col-auto">
                                                     <label for="inputMessage${roomId}" class="col-form-label">
@@ -95,9 +95,9 @@ function receiveaddnewRoomMessage(maxRoom, roomId, roomName, userId) {
                                                   </div>
                                             </div>
                                         </div>`;
-  }
+    }
 
-  newdiv.innerHTML = `<div class="container  h-100"><div class="row h-100 flex-column p-3"> 
+    newdiv.innerHTML = `<div class="container  h-100"><div class="row h-100 flex-column p-3"> 
                     <div class="flex-fill border border-dark rounded" style="overflow:hidden; hyphens: auto; overflow-wrap: break-word">
                         <div class="d-block" id="divChatbox${roomId}" style="overflow-y:auto; max-height: ${roomHeight}px overflow-wrap: break-word">
                             <ul class="p-2" style="list-style-type:none; overflow-wrap: break-word" id="ulmessagesList${roomId}">
@@ -108,117 +108,116 @@ function receiveaddnewRoomMessage(maxRoom, roomId, roomName, userId) {
                                         
             </div></div>`;
 
-  divrooms.appendChild(newdiv);
+    divrooms.appendChild(newdiv);
 
-  setTimeout(function () {
-    /*li.firstElementChild.classList.remove('active');*/
+    setTimeout(function () {
+        /*li.firstElementChild.classList.remove('active');*/
 
-    if (changeTab) {
-      var childli = ui.getElementsByTagName("li");
-      var childDivs = divrooms.getElementsByTagName("div");
+        if (changeTab) {
+            var childli = ui.getElementsByTagName("li");
+            var childDivs = divrooms.getElementsByTagName("div");
 
-      for (i = 0; i < childDivs.length; i++) {
-        childDivs[i].classList.remove("show");
-        childDivs[i].classList.remove("active");
-      }
+            for (i = 0; i < childDivs.length; i++) {
+                childDivs[i].classList.remove("show");
+                childDivs[i].classList.remove("active");
+            }
 
-      newdiv.classList.add("active");
-      newdiv.classList.add("show");
+            newdiv.classList.add("active");
+            newdiv.classList.add("show");
 
-      for (i = 0; i < childli.length; i++) {
-        childli[i].firstElementChild.classList.remove("active");
-      }
+            for (i = 0; i < childli.length; i++) {
+                childli[i].firstElementChild.classList.remove("active");
+            }
 
-      newli.firstElementChild.classList.add("active");
-    }
-  }, 100);
+            newli.firstElementChild.classList.add("active");
+        }
+    }, 100);
 
-  /*li.classList.remove('active');*/
+    /*li.classList.remove('active');*/
 }
 
 function receivepublicMessage(roomId, userId, username, message) {
-  let ulmessagesList = document.getElementById(`ulmessagesList${roomId}`);
+    let ulmessagesList = document.getElementById(`ulmessagesList${roomId}`);
 
-  let li = document.createElement("li");
-  let newmsg = document.createElement("p");
+    let li = document.createElement("li");
+    let newmsg = document.createElement("p");
 
-  if (
-    userId == document.getElementById("hdUserId").value ||
-    document.getElementById("hdUserId").value == ""
-  ) {
-    newmsg.innerHTML = `${username}: ${message}`;
-  } else {
-    newmsg.innerHTML = `<i role="button" class="bi bi-arrow-right-circle text-primary" onclick="openprivateChat('${userId}','${username}')"> </i> ${username}: ${message}`;
-  }
+    if (
+        userId == document.getElementById("hdUserId").value ||
+        document.getElementById("hdUserId").value == ""
+    ) {
+        newmsg.innerHTML = `${username}: ${message}`;
+    } else {
+        newmsg.innerHTML = `<i role="button" class="bi bi-arrow-right-circle text-primary" onclick="openprivateChat('${userId}','${username}')"> </i> ${username}: ${message}`;
+    }
 
-  li.appendChild(newmsg);
-  ulmessagesList.appendChild(li);
+    li.appendChild(newmsg);
+    ulmessagesList.appendChild(li);
 
-  li.scrollIntoView(false);
-  li.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    li.scrollIntoView(false);
+    li.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
 }
 
 function readypublicMessage(roomId) {
-  let inputMsg = document.getElementById(`inputMessage${roomId}`);
-  let sendButton = document.getElementById(`btnMessage${roomId}`);
+    let inputMsg = document.getElementById(`inputMessage${roomId}`);
+    let sendButton = document.getElementById(`btnMessage${roomId}`);
 
-  if (/^\s/.test(inputMsg.value)) {
+    if (/^\s/.test(inputMsg.value)) {
         inputMsg.value = '';
-    sendButton.disabled = true;
-  }
-  else {
-    sendButton.disabled = false;
-  }
+        sendButton.disabled = true;
+    }
+    else {
+        sendButton.disabled = false;
+    }
 }
 
 function receiveprivateMessage(
-  senderId,
-  senderName,
-  receiveId,
-  message,
+    senderId,
+    senderName,
+    receiveId,
+    message,
     chatId,
-  receiverName,
-  time
+    receiverName,
+    time,
+    isReaded
 ) {
     var chatboxName = `ulmessagesList${receiveId}`;
-    var biChek = `<i class="bi bi-check"></i>`;
 
-  if (receiveId === document.getElementById("hdUserId").value) {
-    chatboxName = `ulmessagesList${senderId}`;
-  }
+    if (receiveId === document.getElementById("hdUserId").value) {
+        chatboxName = `ulmessagesList${senderId}`;
+    }
 
-  let ulmessagesList = document.getElementById(chatboxName);
+    let ulmessagesList = document.getElementById(chatboxName);
 
-  if (typeof ulmessagesList == "undefined" || ulmessagesList == null) {
-    receiveopenprivateChat(senderId, senderName);
-    ulmessagesList = document.getElementById(chatboxName);
-  }
+    if (typeof ulmessagesList == "undefined" || ulmessagesList == null) {
+        receiveopenprivateChat(senderId, senderName);
+        ulmessagesList = document.getElementById(chatboxName);
+    }
     let myAudio = document.querySelector('#audio');
-    
+
     let li = document.createElement("li");
     let newmsg = document.createElement("p");
-   
-    newmsg.setAttribute("id", chatId);
-/*    var checkMark = document.getElementById("checkMark");*/
 
-  newmsg.classList.add("alert");
+    newmsg.setAttribute("id", chatId);
+
+    newmsg.classList.add("alert");
     newmsg.classList.add("px-2");
     ulmessagesList.classList.add("p-2");
-    
+
 
     if (senderId === document.getElementById("hdUserId").value) {
         li.classList.add("text-end");
-    newmsg.classList.add("me-3");
-    newmsg.classList.add("p-2");
-    newmsg.classList.add("inline");
+        newmsg.classList.add("me-3");
+        newmsg.classList.add("p-2");
+        newmsg.classList.add("inline");
         newmsg.classList.add("text-break");
         newmsg.classList.add("text-start");
-    newmsg.classList.add("inline");
-    newmsg.classList.add("alert-primary");
-    newmsg.classList.add("border1");
-    newmsg.classList.add("wrap");    
-        newmsg.innerHTML = `${message}<button role="button" align="left" style="background:none; border:none; " class="bi bi-trash-fill text-danger" onclick="deleteprivateChat('${chatId}')"></button><div id="checkMark" class="text-end">${biChek}${time}</div>`;
-
+        newmsg.classList.add("inline");
+        newmsg.classList.add("alert-primary");
+        newmsg.classList.add("border1");
+        newmsg.classList.add("wrap");
+        newmsg.innerHTML = `${message}<button role="button" align="left" style="background:none; border:none;" class="bi bi-trash-fill text-danger" onclick="deleteprivateChat('${chatId}')"></button><div id="checkMark${senderId}" class="test${senderId} text-end bi bi-check"> ${time}</div>`;
+        
     } else {
         li.classList.add("text-start");
         newmsg.classList.add("ms-1");
@@ -229,280 +228,356 @@ function receiveprivateMessage(
         newmsg.classList.add("wrap");
         newmsg.classList.add("border2");
         myAudio.play();
-        newmsg.innerHTML = `${message}<div class="text-start"> ${time}<i role="button" class="bi bi-trash text-danger" onclick="deleteprivateChat('${chatId}')"></i></div>`;
-  }
+        newmsg.innerHTML = `${message}<div class="text-start test"> ${time} <i role="button" class="bi bi-trash text-danger" onclick="deleteprivateChat('${chatId}')"></i></div>`;
+        notifyPMMessage(1, senderId);   
+    }
 
     li.appendChild(newmsg);
 
+
+    ulmessagesList.appendChild(li);
+
+    li.scrollIntoView(false);
+    li.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+    notifyUnreadMessage(1, isReaded, senderId, receiveId);
     
-  ulmessagesList.appendChild(li);
-
-  li.scrollIntoView(false);
-  li.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-
-    notifyUnreadMessage(1);
 }
 
 function readyprivateMessage() {
-  let inputMsg = document.getElementById("inputMessagePrivate");
-    
+    let inputMsg = document.getElementById("inputMessagePrivate");
+
     let sendButton = document.getElementById("btnMessagePrivate");
     if (/^\s/.test(inputMsg.value)) {
         inputMsg.value = '';
         sendButton.disabled = true;
     } else {
-    sendButton.disabled = false;
-  }
+        sendButton.disabled = false;
+    }
 }
 
 function setchatuserId(userId) {
-  document.getElementById("hdchatUserId").value = userId;
+    document.getElementById("hdchatUserId").value = userId;
+
+    notifyPMMessage(0, userId);
 }
 
 function receivedeleteRoomMessage(deleted, selected) {
-  let ui = document.getElementById("ulroomTabs");
-  let link = document.getElementById(`room${deleted}-tab`);
+    let ui = document.getElementById("ulroomTabs");
+    let link = document.getElementById(`room${deleted}-tab`);
 
-  let li = link.parentNode;
-  /*let ui = li.parentNode;*/
+    let li = link.parentNode;
+    /*let ui = li.parentNode;*/
 
-  let divrooms = document.getElementById("divRooms");
-  let childdiv = document.getElementById(`room${deleted}`);
+    let divrooms = document.getElementById("divRooms");
+    let childdiv = document.getElementById(`room${deleted}`);
 
-  var changetab = true;
-  if (link.classList.contains("active") == false) {
-    changetab = false;
-  }
-
-  ui.removeChild(li);
-  divrooms.removeChild(childdiv);
-
-  setTimeout(function () {
-    var childli = ui.getElementsByTagName("li");
-    var childDivs = divrooms.getElementsByTagName("div");
-
-    let liaddnew = document.getElementById("liaddnewRoom");
-
-    if (changetab) {
-      for (i = 0; i < childDivs.length; i++) {
-        childDivs[i].classList.remove("show");
-        childDivs[i].classList.remove("active");
-      }
-
-      for (i = 0; i < childli.length; i++) {
-        childli[i].firstElementChild.classList.remove("active");
-      }
+    var changetab = true;
+    if (link.classList.contains("active") == false) {
+        changetab = false;
     }
 
-    if (Number(selected) > 0) {
-      if (changetab) {
-        let newdiv = document.getElementById(`room${selected}`);
-        let link1 = document.getElementById(`room${selected}-tab`);
+    ui.removeChild(li);
+    divrooms.removeChild(childdiv);
 
-        let newli = link1.parentNode;
+    setTimeout(function () {
+        var childli = ui.getElementsByTagName("li");
+        var childDivs = divrooms.getElementsByTagName("div");
 
-        newdiv.classList.add("active");
-        newdiv.classList.add("show");
+        let liaddnew = document.getElementById("liaddnewRoom");
 
-        newli.firstElementChild.classList.add("active");
-      }
+        if (changetab) {
+            for (i = 0; i < childDivs.length; i++) {
+                childDivs[i].classList.remove("show");
+                childDivs[i].classList.remove("active");
+            }
 
-      liaddnew.classList.remove("d-none");
-    } else {
-      //newli.classList.add('show');
-      //newli.classList.add('active');
+            for (i = 0; i < childli.length; i++) {
+                childli[i].firstElementChild.classList.remove("active");
+            }
+        }
 
-      liaddnew.firstElementChild.classList.add("active");
-    }
-  }, 100);
+        if (Number(selected) > 0) {
+            if (changetab) {
+                let newdiv = document.getElementById(`room${selected}`);
+                let link1 = document.getElementById(`room${selected}-tab`);
+
+                let newli = link1.parentNode;
+
+                newdiv.classList.add("active");
+                newdiv.classList.add("show");
+
+                newli.firstElementChild.classList.add("active");
+            }
+
+            liaddnew.classList.remove("d-none");
+        } else {
+            //newli.classList.add('show');
+            //newli.classList.add('active');
+
+            liaddnew.firstElementChild.classList.add("active");
+        }
+    }, 100);
 }
 
 function receiveopenprivateChat(userId, userName, tabchange) {
-  let pubtab = document.getElementById("public-tab");
-  let pribtab = document.getElementById("private-tab");
+    let pubtab = document.getElementById("public-tab");
+    let pribtab = document.getElementById("private-tab");
 
-  let pubtabbox = document.getElementById("publictabbox");
-  let pribtabbox = document.getElementById("privatetabbox");
+    let pubtabbox = document.getElementById("publictabbox");
+    let pribtabbox = document.getElementById("privatetabbox");
 
-  if (tabchange) {
-    pubtab.classList.remove("active");
-    pribtab.classList.add("active");
+    if (tabchange) {
+        pubtab.classList.remove("active");
+        pribtab.classList.add("active");
 
-    pubtabbox.classList.remove("show");
-    pubtabbox.classList.remove("active");
+        pubtabbox.classList.remove("show");
+        pubtabbox.classList.remove("active");
 
-    pribtabbox.classList.add("show");
-    pribtabbox.classList.add("active");
-  }
-
-  document.getElementById("hdchatUserId").value = userId;
-
-  let div = document.getElementById("list-tab");
-
-  var newa = document.getElementById(`list-${userId}-list`);
-  if (typeof newa != "undefined" && newa != null) {
-    // Exists.
-    newa.classList.add("active");
-  } else {
-    var children = div.children;
-    for (var i = 0; i < children.length; i++) {
-      children[i].classList.remove("active");
+        pribtabbox.classList.add("show");
+        pribtabbox.classList.add("active");
     }
 
-    newa = document.createElement("a");
+    document.getElementById("hdchatUserId").value = userId;
 
-    newa.classList.add("list-group-item");
-    newa.classList.add("list-group-item-action");
-    newa.classList.add("active");
+    let div = document.getElementById("list-tab");
 
-    newa.setAttribute("id", `list-${userId}-list`);
+    var newa = document.getElementById(`list-${userId}-list`);
+    if (typeof newa != "undefined" && newa != null) {
+        // Exists.
+        newa.classList.add("active");
+    } else {
+        var children = div.children;
+        for (var i = 0; i < children.length; i++) {
+            children[i].classList.remove("active");
+        }
 
-    newa.setAttribute("data-bs-toggle", `list`);
-    newa.setAttribute("href", `#list-${userId}`);
-    newa.setAttribute("role", `tab`);
-    newa.setAttribute("aria-controls", `list-${userId}`);
+        newa = document.createElement("a");
 
-    newa.setAttribute("onclick", `setchatuserId('${userId}')`);
+        newa.classList.add("list-group-item");
+        newa.classList.add("list-group-item-action");
+        newa.classList.add("active");
 
-    newa.innerHTML = `<div class="row">
-                        <div class="col"> 
+        newa.setAttribute("id", `list-${userId}-list`);
+
+        newa.setAttribute("data-bs-toggle", `list`);
+        newa.setAttribute("href", `#list-${userId}`);
+        newa.setAttribute("role", `tab`);
+        newa.setAttribute("aria-controls", `list-${userId}`);
+
+        newa.setAttribute("onclick", `setchatuserId('${userId}')`);
+
+        newa.innerHTML = `<div class="row">
+                        <div class="col" onclick="readMessage('${userId}')"> 
                             <i role="button" class="bi bi-x-lg" title="Close chat" onclick="deleteprivatechatGroup('${userId}')"> </i> ${userName}
                         </div>
                         <div class="col-auto">
                             <i class="dot block-text align-middle bg-success"
-                                id="spanOnline${userId}" style="margin-left:5px;" title="Online">
-                                <span id="user-badge${userId}" class="badge bg-danger"></span>
+                                id="spanOnline${userId}" style="margin-left:5px;" title="Online">                               
                                 </i>
+                                <span id="user-badge${userId}" class="badge bg-danger"></span>
                         </div>
                     </div>`;
 
-    div.appendChild(newa);
-  }
-
-  let div1 = document.getElementById("nav-tabContent");
-
-  var div2 = document.getElementById(`list-${userId}`);
-
-  if (typeof div2 != "undefined" && div2 != null) {
-    // Exists.
-    div2.classList.add("active");
-    div2.classList.add("show");
-  } else {
-    var children = div1.children;
-    for (var i = 0; i < children.length; i++) {
-      children[i].classList.remove("active");
-      children[i].classList.remove("show");
+        div.appendChild(newa);
     }
 
-    div2 = document.createElement("div");
+    let div1 = document.getElementById("nav-tabContent");
 
-    div2.classList.add("tab-pane");
-    div2.classList.add("fade");
-    div2.classList.add("active");
-    div2.classList.add("show");
+    var div2 = document.getElementById(`list-${userId}`);
 
-    div2.setAttribute("id", `list-${userId}`);
+    if (typeof div2 != "undefined" && div2 != null) {
+        // Exists.
+        div2.classList.add("active");
+        div2.classList.add("show");
+    } else {
+        var children = div1.children;
+        for (var i = 0; i < children.length; i++) {
+            children[i].classList.remove("active");
+            children[i].classList.remove("show");
+        }
 
-    div2.setAttribute("aria-labelledby", `list-${userId}-list`);
-    div2.setAttribute("role", `tabpanel`);
+        div2 = document.createElement("div");
 
-    div2.innerHTML = `<div style="overflow: hidden;"> 
+        div2.classList.add("tab-pane");
+        div2.classList.add("fade");
+        div2.classList.add("active");
+        div2.classList.add("show");
+
+        div2.setAttribute("id", `list-${userId}`);
+
+        div2.setAttribute("aria-labelledby", `list-${userId}-list`);
+        div2.setAttribute("role", `tabpanel`);
+
+        div2.innerHTML = `<div style="overflow: hidden;"> 
                         <div class="d-block px-2 pb-2" /* style="overflow-y:auto*/; max-height:1700px">  
                             <ul class="p-2" style="list-style-type:none; /*overflow-wrap: break-word*/" id="ulmessagesList${userId}">
                             </ul>
                         </div>
                     </div>`;
 
-    div1.appendChild(div2);
-  }
+        div1.appendChild(div2);
+    }
 }
 
 function receivedeleteprivateChat(chatid) {
     let p = document.getElementById(chatid);
     let myAudioDelete = document.querySelector('#deleteSound');
-  let li = p.parentNode;
-  let ui = li.parentNode;
+    let li = p.parentNode;
+    let ui = li.parentNode;
 
     ui.removeChild(li);
     myAudioDelete.play();
 
-  notifyUnreadMessage(2);
+    notifyUnreadMessage(2);
+
 }
 
+
 function setchatboxColor(elementid, color) {
-  document.getElementById("private-badge").innerText = "";
-  document.getElementById(elementid).style.backgroundColor = color;
+    document.getElementById("private-badge").innerText = "";
+    document.getElementById(elementid).style.backgroundColor = color;
 }
 
 function deleteprivatechatGroup(userId) {
-  var selectedDelete = false;
-  let div = document.getElementById("list-tab");
+    var selectedDelete = false;
+    let div = document.getElementById("list-tab");
 
-  var newa = document.getElementById(`list-${userId}-list`);
-  if (typeof newa != "undefined" && newa != null) {
-    if (newa.classList.contains("active")) {
-      selectedDelete = true;
+    var newa = document.getElementById(`list-${userId}-list`);
+    if (typeof newa != "undefined" && newa != null) {
+        if (newa.classList.contains("active")) {
+            selectedDelete = true;
+        }
+
+        div.removeChild(newa);
     }
 
-    div.removeChild(newa);
-  }
+    let div1 = document.getElementById("nav-tabContent");
 
-  let div1 = document.getElementById("nav-tabContent");
+    var div2 = document.getElementById(`list-${userId}`);
 
-  var div2 = document.getElementById(`list-${userId}`);
+    if (typeof div2 != "undefined" && div2 != null) {
+        div1.removeChild(div2);
+    }
 
-  if (typeof div2 != "undefined" && div2 != null) {
-    div1.removeChild(div2);
-  }
+    if (div.children.length == 0) {
+        let pubtab = document.getElementById("public-tab");
+        let pribtab = document.getElementById("private-tab");
 
-  if (div.children.length == 0) {
+        pubtab.classList.add("active");
+        pribtab.classList.remove("active");
+
+        let pubtabbox = document.getElementById("publictabbox");
+        let pribtabbox = document.getElementById("privatetabbox");
+
+        pubtabbox.classList.add("show");
+        pubtabbox.classList.add("active");
+
+        pribtabbox.classList.remove("show");
+        pribtabbox.classList.remove("active");
+    } else {
+        if (selectedDelete) {
+            div.children[0].classList.remove("show");
+            div.children[0].classList.remove("active");
+            div1.children[0].classList.remove("active");
+
+            document.getElementById("hdchatUserId").value = div1.children[0]
+                .getAttribute("id")
+                .replace("list-", "");
+        }
+    }
+}
+
+function notifyUnreadMessage(action, isReaded, senderId, receiverId) {
     let pubtab = document.getElementById("public-tab");
-    let pribtab = document.getElementById("private-tab");
+    let badge = document.getElementById("private-badge");
+    let privuser = document.getElementById(`list-${senderId}-list`);
+    let divid = document.getElementById(`list${senderId}`);
 
-    pubtab.classList.add("active");
-    pribtab.classList.remove("active");
 
-    let pubtabbox = document.getElementById("publictabbox");
-    let pribtabbox = document.getElementById("privatetabbox");
+    if (pubtab.classList.contains("active")) {
+        var badgeval = Number(badge.innerText);
+        if (action == 1) {
+            badgeval = badgeval + 1;
+        } else {
+            badgeval = badgeval - 1;
+        }
 
-    pubtabbox.classList.add("show");
-    pubtabbox.classList.add("active");
-
-    pribtabbox.classList.remove("show");
-    pribtabbox.classList.remove("active");
-  } else {
-    if (selectedDelete) {
-      div.children[0].classList.remove("show");
-      div.children[0].classList.remove("active");
-      div1.children[0].classList.remove("active");
-
-      document.getElementById("hdchatUserId").value = div1.children[0]
-        .getAttribute("id")
-        .replace("list-", "");
+        if (badgeval == 0) {
+            badge.innerText = "";
+        } else if (badgeval <= 99) {
+            badge.innerText = badgeval;
+        } else {
+            badge.innerText = "99+";
+        }
+        
     }
-  }
+    if (privuser.classList.contains("active")) {
+        var elements = document.getElementsByClassName(`test${receiverId}`);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.remove("bi-check");
+            elements[i].classList.add("bi-check-all");
+        }
+
+    }
+
+    //if (divid.classList.contains("active")) {
+    //    var elements = document.getElementsByClassName(`test${senderId}`);
+    //    for (var i = 0; i < elements.length; i++) {
+    //        elements[i].classList.remove("bi-check");
+    //        elements[i].classList.add("bi-check-all");
+    //    }
+    //}
+
+
+    if (!privuser.classList.contains("active")) {
+        var elements = document.getElementsByClassName(`test${receiverId}`);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.remove("bi-check");
+            
+        }
+
+    }
+}
+function notifyPMMessage(action, userId) {
+    let badge = document.getElementById(`user-badge${userId}`);
+    let listUser = document.getElementById(`list-${userId}-list`);
+
+    if (!listUser.classList.contains("active")) {
+        var badgeval = Number(badge.innerText);
+        if (action == 1) {
+            badgeval = badgeval + 1;
+        } else {
+            badgeval = badgeval - 1;
+        }
+
+        if (badgeval == 0) {
+            badge.innerText = "";
+        } else if (badgeval <= 99) {
+            badge.innerText = badgeval;
+        } else {
+            badge.innerText = "99+";
+        }
+       
+    }
+    if (listUser.classList.contains("active")) {
+        var badgeval = Number(badge.innerText);
+
+        badgeval = 0;
+
+        if (badgeval == 0) {
+            badge.innerText = "";
+            
+        } else if (badgeval <= 99) {
+            badge.innerText = badgeval;
+        } else {
+            badge.innerText = "99+";
+        }
+        
+        
+       
+    }
 }
 
-function notifyUnreadMessage(action) {
-  let pubtab = document.getElementById("public-tab");
-  let badge = document.getElementById("private-badge");
-
-  if (pubtab.classList.contains("active")) {
-    var badgeval = Number(badge.innerText);
-    if (action == 1) {
-        badgeval = badgeval + 1;
-    } else {
-        badgeval = badgeval - 1;  
-    }
-
-    if (badgeval == 0) {
-      badge.innerText = "";
-    } else if (badgeval <= 99) {
-      badge.innerText = badgeval;
-    } else {
-      badge.innerText = "99+";
-    }
-    }
-}
 
 

@@ -34,7 +34,7 @@ connection.on("ReceiveUserConnected", function (userId, userName) {
         // Exists.
         spanOnline.classList.add("bg-success");
         spanOnline.classList.remove("bg-danger");
-        spanOnline.setAttribute("title", "Online");
+        spanOnline.setAttribute("title", "Online"); 
     }
 });
 
@@ -71,9 +71,16 @@ connection.on(
 
 connection.on(
   "ReceivePrivateMessage",
-    function (senderId, senderName, receiveId, message, chatId, receiverName, time) {
-        receiveprivateMessage(senderId, senderName, receiveId, message, chatId, receiverName, time);
+    function (senderId, senderName, receiveId, message, chatId, receiverName, time, isReaded) {
+        receiveprivateMessage(senderId, senderName, receiveId, message, chatId, receiverName, time, isReaded);
   }
+);
+
+connection.on(
+    "ReadMessage",
+    function (receiverId,senderId) {
+        readAllMessage(receiverId, senderId);
+    }
 );
 
 connection.on("ReceiveOpenPrivateChat", function (userId, userName) {
@@ -231,4 +238,19 @@ function deleteprivateChat(chatId) {
   connection.invoke("SendDeletePrivateChat", chatId).catch(function (err) {
     return console.error(err.toString());
   });
+}
+
+
+function readMessage(receiverId) {
+    connection.invoke("MessageReaded", receiverId);
+}
+function readAllMessage(receiverId, senderId) {
+    let user = document.getElementById(`list-${receiverId}`);
+    if (user.classList.contains("active")) {
+        var elements = document.getElementsByClassName(`test`);
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.remove("");
+            elements[i].classList.add("");
+        }
+    }
 }

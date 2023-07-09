@@ -80,8 +80,9 @@ namespace WebShop.Hubs
             var time = DateTime.Now.ToShortTimeString();
             char[] MyChar = { ' ', '\n' };
             var users = new string[] { senderId, receiverId };
+            bool isReaded = false;
            
-            await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, senderName, receiverId, message.TrimEnd(MyChar), Guid.NewGuid(),receiverName, time);
+            await Clients.Users(users).SendAsync("ReceivePrivateMessage", senderId, senderName, receiverId, message.TrimEnd(MyChar), Guid.NewGuid(), receiverName, time, isReaded);
         }
 
         public async Task SendOpenPrivateChat(string receiverId)
@@ -95,6 +96,15 @@ namespace WebShop.Hubs
         public async Task SendDeletePrivateChat(string chartId)
         {
             await Clients.All.SendAsync("ReceiveDeletePrivateChat", chartId);
+        }
+        public async Task MessageReaded(string receiverId)
+        {
+            var userName = Context.User.FindFirstValue(ClaimTypes.Name);
+            var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var users = new string[] { userId, receiverId };
+
+            await Clients.Users(users).SendAsync("ReadMessage", receiverId, userId);
         }
 
         //public async Task SendMessageToAll(string user, string message)
