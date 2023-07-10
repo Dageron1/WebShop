@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace WebShop.Models {
 	public class ApplicationUser:IdentityUser {
+        public string ImagePath { get; set; }
 		[Required]
         public string Name { get; set; }
 

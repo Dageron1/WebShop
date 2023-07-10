@@ -85,6 +85,8 @@ namespace WebShopWeb.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// 
+            public string ImagePath { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -147,12 +149,13 @@ namespace WebShopWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile file, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                _unitOfWork.UploadImage(file);
                 var user = CreateUser();
                 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -163,6 +166,7 @@ namespace WebShopWeb.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
+                user.ImagePath = file.FileName;
 
                 if (Input.Role == SD.Role_Company) {
                     user.CompanyId=Input.CompanyId;
